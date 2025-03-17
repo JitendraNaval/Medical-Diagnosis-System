@@ -1,0 +1,35 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(223, 232, 234); /* Light Gray-Blue */
+    margin: 0;
+    padding: 0;
+}
+
+/* Right Section Layout */
+.right-section {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgb(223, 232, 234); /* Matching Background */
+}
+
+/* Card and Box Shadow */
+.box-shadow {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Centered Heading */
+.text-center {
+    text-align: center;
+}
+
+/* Warning Text */
+.text-danger {
+    color: red;
+}

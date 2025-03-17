@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Medical Diagnosis System{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Make the whole page fill the viewport */
+        body, html {
+            height: 100%;
+            margin: 0;
+            
+        }
+
+        /* Container to fit everything in one screen */
+        .container-fluid {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 80vh; /* Full viewport height */
+            padding-top: 70px; /* Space for fixed navbar */
+        }
+
+       
+
+        .right-section {
+    flex: 1;
+    margin-top: 90px;  /* Push content below navbar */
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgb(223, 232, 234);
+}
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: rgb(40, 55, 71) !important; /* Deep Blue-Gray */
+            backdrop-filter: blur(5px);
+        }
+
+        .navbar .navbar-brand, 
+        .navbar .nav-link {
+            color: rgb(223, 232, 234) !important; /* Light Text */
+        }
+
+        .navbar .nav-link:hover {
+            color: rgb(255, 255, 255) !important; /* Pure White on Hover */
+        }
+
+        .navbar .btn-outline-primary {
+            color: rgb(223, 232, 234) !important; /* Light Text */
+            border-color: rgb(223, 232, 234) !important; /* Light Border */
+        }
+
+        .navbar .btn-outline-primary:hover {
+            background-color: rgb(52, 152, 219) !important; /* Bright Blue */
+            border-color: rgb(52, 152, 219) !important;
+            color: white !important;
+        }
+
+        .container-fluid {
+            --bs-gutter-x: 0 !important;
+        }
+
+        .box-shadow {
+            background-color:white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    
+      
+    /* Only apply styles to the register page */
+    .register-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    width: 100vw;  /* Full viewport width */
+    background-color: rgb(223, 232, 234); /* Same as background */
+    overflow: hidden; /* Prevent entire page scrolling */
+    padding: 20px; /* Add spacing for better responsiveness */
+}
+
+.register-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    width: 100vw;  /* Full viewport width */
+    background-color: rgb(223, 232, 234); /* Same as background */
+    padding: 20px; /* Prevent content from touching edges */
+    overflow: hidden; /* Hide page scrollbars */
+}
+
+/* Centered White Box */
+.register-card {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px; /* Limit width */
+    width: 100%;
+    height: auto; /* Allow flexible height */
+    max-height: 90vh; /* Prevent too large box */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden; /* Prevent external scroll */
+}
+
+/* Scrollable form inside the box */
+.register-card .card-body {
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    max-height: 75vh; /* Adjust height to enable scrolling */
+    padding-right: 10px; /* Avoid text cutoff */
+}
+
+/* Always show a vertical scrollbar */
+.register-card .card-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.register-card .card-body::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Light gray scrollbar track */
+    border-radius: 10px;
+}
+
+.register-card .card-body::-webkit-scrollbar-thumb {
+    background: #888; /* Dark gray scrollbar */
+    border-radius: 10px;
+}
+
+.register-card .card-body::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Darker on hover */
+}
+
+/* Prevent full page scrolling */
+body, html {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+/* Login Page Styling */
+.login-wrapper {
+    display: flex;
+    margin-top:0px;
+    align-items: center; /* Center vertically */  justify-content: center; /* Center horizontally */
+    height: 100vh; /* Full viewport height */
+    background-color: rgb(223, 232, 234); /* Ensure the whole background is covered */
+    padding-top: 70px; /* Offset for fixed navbar */
+}
+
+/* Centering the login card */
+.card {
+    border-radius: 10px;
+    background: white; /* Keep form background white for better readability */
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Adjust row to center the form properly */
+.centered-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 75vh; /* Adjust this to move the form slightly up */
+}
+/* Completely remove scrollbars ONLY on the login page */
+body, html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Hide scrollbars */
+}
+/* Apply background color only to the prediction page */
+.prediction-page {
+    background-color: rgb(223, 232, 234); /* Light gray background */
+    min-height: 100vh; /* Full page height */
+    padding: 20px;
+}
+
+
+
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Navbar (Fixed) -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">MyWebsite</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-primary ms-2" href="/login">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Full-screen Layout -->
+    <div class="container-fluid">
+        <div class="right-section"> 
+            {% block content %}{% endblock %}
+        </div>
+        
+       
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

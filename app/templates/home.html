@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="jumbotron text-center box-shadow">
+            <h1 class="display-4">Welcome to the Medical Diagnosis System</h1>
+            <p class="lead">Enter your symptoms and get an AI-powered diagnosis instantly.</p>
+            <hr class="my-4">
+            <p>Our system uses advanced machine learning to provide accurate disease predictions.</p>
+            <a class="btn btn-primary btn-lg" href="/register" role="button">Get Diagnosed</a>
+        </div>
+
+        <div class="row align-items-center mt-5">
+            <div class="col-md-6">
+                <div class="box-shadow p-4">
+                    <h2>How It Works</h2>
+                    <p>Simply enter your symptoms, and our AI model will analyze your input to provide possible diagnoses.</p>
+                    <ul>
+                        <li>Enter symptoms in the diagnosis form.</li>
+                        <li>Get instant results from our trained AI model.</li>
+                        <li>Receive health tips and recommendations.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box-shadow p-4">
+                    <h2>Why Use Our System?</h2>
+                    <p>Our Medical Diagnosis System is designed to help individuals quickly identify potential health issues and seek professional medical advice.</p>
+                    <ul>
+                        <li>Fast and reliable predictions.</li>
+                        <li>Easy-to-use interface.</li>
+                        <li>Free and secure.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

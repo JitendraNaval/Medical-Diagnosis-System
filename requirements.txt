@@ -1,0 +1,11 @@
+flask
+Flask-WTF
+SQLAlchemy
+Flask-Bcrypt
+flask-sqlalchemy
+email-validator
+numpy
+scikit-learn
+pandas
+
+
