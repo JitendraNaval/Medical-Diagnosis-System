@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, url_for, flash, redirect, request, session
 from werkzeug.security import generate_password_hash
 from app import db, bcrypt
+from flask_bcrypt import Bcrypt
 from app.models import User
 from app.forms import MedicalDiagnosisRegistrationForm, LoginForm
 from app.diagnosis_helper import get_predicted_value, helper, symptoms_dict
@@ -17,12 +18,11 @@ def home():
 def about():
     return render_template('about.html', title='About')
 
-# Register Page
+bcrypt = Bcrypt()
+
 @main.route('/register', methods=['GET', 'POST'])
 def register():
     form = MedicalDiagnosisRegistrationForm()
-    message = None  # Initialize message for the template
-
     if form.validate_on_submit():
         username = form.username.data
         email = form.email.data
@@ -31,27 +31,35 @@ def register():
         medical_condition = form.medical_condition.data
         password = form.password.data
 
-        existing_user = User.query.filter_by(email=email).first()  # Check if user exists
+        # Check if user already exists
+        existing_user = User.query.filter_by(email=email).first()
 
         if existing_user:
-            message = "User already exists. Please log in instead."
-        else:
-            hashed_password = generate_password_hash(password)
-            new_user = User(
-                username=username,
-                email=email,
-                age=age,
-                gender=gender,
-                medical_condition=medical_condition,
-                password=hashed_password
-            )
+            flash("User already exists. Please log in instead.", "danger")
+            return redirect(url_for('main.login'))
 
-            db.session.add(new_user)
-            db.session.commit()
-            flash("Registration successful! You can now log in.", "success")
-            return redirect(url_for('main.login'))  # Redirect to login page
+        # Hash the password correctly
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
-    return render_template('register.html', form=form, message=message)  # Pass message to template
+        # Create a new user
+        new_user = User(
+            username=username,
+            email=email,
+            age=age,
+            gender=gender,
+            medical_condition=medical_condition,
+            password=hashed_password
+        )
+
+        # Save the user to the database
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash("Registration successful! You can now log in.", "success")
+        return redirect(url_for('main.login'))  # Redirect to login page
+
+    return render_template('register.html', form=form)  # Render form if validation fails
+
 
 # Login Page
 @main.route("/login", methods=['GET', 'POST'])
@@ -59,16 +67,26 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
-            session["user_id"] = user.id
-            session["username"] = user.username
-            session["email"] = user.email
-            flash('You have been logged in!', 'success')
-            return redirect(url_for('main.Prediction'))
+
+        if user:
+            try:
+                # Check if the stored password hash is valid
+                if bcrypt.check_password_hash(user.password, form.password.data):
+                    session["user_id"] = user.id
+                    session["username"] = user.username
+                    session["email"] = user.email
+                    flash('You have been logged in!', 'success')
+                    return redirect(url_for('main.Prediction'))
+                else:
+                    flash('Invalid email or password. Please try again.', 'danger')
+            except ValueError as e:
+                flash("Password hash is invalid. Try resetting your password.", "danger")
+                print(f"Error: {e}")  # Logs the error in the console
         else:
-            flash('Login Unsuccessful. Please check email and password', 'danger')
+            flash('User does not exist. Please register first.', 'danger')
 
     return render_template('login.html', title='Login', form=form)
+
 
 # Dashboard - Shows user details and allows symptom input
 @main.route("/Prediction", methods=['GET', 'POST'])
